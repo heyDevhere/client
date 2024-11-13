@@ -1,23 +1,12 @@
-import logo from './logo.svg';
+import Home from './Home';
 import './App.css';
-
+import ParticlesComponent from './particles';
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App" style={{ position: "relative", height: "100vh" }}>
+      {/* ParticlesComponent will fill the screen and stay in the background */}
+      <ParticlesComponent />
+      <Home />
     </div>
   );
 }
