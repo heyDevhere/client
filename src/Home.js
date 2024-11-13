@@ -46,7 +46,7 @@ export const VideoPlayer = ({ videoTrack, style }) => {
 // Utility functions for room management (connecting, getting rooms, etc.)
 async function createRoom(userId) {
 
-    const response = await axios.post(`http://localhost:3000/api/rooms/?userId=${userId}`, {
+    const response = await axios.post(`https://newnew-repo.onrender.com/api/rooms/?userId=${userId}`, {
         withCredentials: true // Include credentials in axios
     });
     console.log(response);
@@ -56,7 +56,7 @@ async function createRoom(userId) {
 
 async function getRandomRoom(userId) {
 
-    const response = await axios.get(`http://localhost:3000/api/rooms/?userId=${userId}`, {
+    const response = await axios.get(`https://newnew-repo.onrender.com/api/rooms/?userId=${userId}`, {
         withCredentials: true // Include credentials in axios
     });
     console.log(response);
@@ -66,7 +66,7 @@ async function getRandomRoom(userId) {
 
 async function setRoomToWaiting(roomId) {
 
-    const response = await axios.put(`http://localhost:3000/api/rooms/${roomId}`, {
+    const response = await axios.put(`https://newnew-repo.onrender.com/api/rooms/${roomId}`, {
         withCredentials: true // Include credentials in axios
     });
     console.log("set room to waiting",response)
