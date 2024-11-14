@@ -25,8 +25,8 @@ export const VideoPlayer = ({ videoTrack, style }) => {
         const playerRef = ref.current;
         if (!videoTrack) return;
         if (!playerRef) return;
-         videoTrack.play(playerRef); 
-    
+        videoTrack.play(playerRef);
+
         return () => {
             videoTrack.stop();
         };
@@ -69,7 +69,7 @@ async function setRoomToWaiting(roomId) {
     const response = await axios.put(`https://newnew-repo.onrender.com/api/rooms/${roomId}`, {
         withCredentials: true // Include credentials in axios
     });
-    console.log("set room to waiting",response)
+    console.log("set room to waiting", response)
     return await response.data;
 }
 
@@ -77,14 +77,14 @@ async function setRoomToWaiting(roomId) {
 async function connectToAgoraRtm(roomId, userId, onMessage, token) {
     const { default: AgoraRTM } = await import("agora-rtm-sdk");
     const client = AgoraRTM.createInstance("7d76c8034f6442d38c3860aab321d2bf");
-    
+
     try {
         await client.login({ uid: userId, token });
     } catch (error) {
         console.error("Failed to login:", error);
         return;
     }
-    
+
     const channel = await client.createChannel(roomId);
     await channel.join();
     channel.on("ChannelMessage", (message, userId) => {
@@ -113,7 +113,7 @@ export default function Home() {
     const rtcClientRef = useRef();
     const [micMuted, setmicMuted] = useState(true);
     const [camMuted, setcamMuted] = useState(true);
-    
+
 
 
     let audioTracks = {
@@ -166,7 +166,7 @@ export default function Home() {
         // client.publish(vidTracks.localvidTrack);
         // onWebcamStart(vidTracks.localvidTrack);
 
-        return { tracks,client };
+        return { tracks, client };
     }
 
     function handleNextClick() {
@@ -188,14 +188,14 @@ export default function Home() {
             myVideo.setEnabled(!camMuted);
         }
 
-     
-        
+
+
     }
 
     async function toggleMic() {
         if (micMuted) {
             setmicMuted(false);
-            
+
         }
         else {
             setmicMuted(true);
@@ -296,6 +296,69 @@ export default function Home() {
     const isChatting = room;
 
     return (
-        c
+        <div className="main">
+            {isChatting ? (
+                <>
+                    <div className="wow">
+                        Room ID:  {room._id}
+                    </div>
+                    <div className="chat-window">
+                        <div className="video-panel">
+                            <div className="video-stream">
+                                {myVideo && (
+                                    <VideoPlayer
+                                        style={{ width: "100%", height: "100%" }}
+                                        videoTrack={myVideo}
+                                    />
+                                )}
+                                <button onClick={toggleCamera} className="btnss">
+                                    {camMuted ? <VideoCameraBack /> : <VideocamOffIcon />}
+
+                                </button>
+
+                                <button onClick={toggleMic} className="btnss">
+                                    {micMuted ? <MicIcon /> : <MicOffIcon />}
+                                </button>
+                            </div>
+                            <div className="video-stream">
+                                {themVideo && (
+                                    <VideoPlayer
+                                        style={{ width: "100%", height: "100%" }}
+                                        videoTrack={themVideo}
+
+                                    />
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="chat-panel">
+                            <ul>
+                                {messages.map((message, idx) => (
+                                    <li key={idx}>
+                                        {convertToYouThem(message)} - {message.message}
+                                    </li>
+                                ))}
+                            </ul>
+
+                            <form onSubmit={handleSubmitMessage}>
+                                <input
+                                    value={input}
+                                    onChange={(e) => setInput(e.target.value)}
+                                />
+                                <div className="iff">
+                                    <button className="btn">Submit</button>
+                                </div>
+                            </form>
+                            <button className="btn" onClick={handleNextClick}>Next</button>
+                        </div>
+                    </div>
+                </>
+            ) : (
+                <>
+                    <div className="wo">Welcome to Peer-To-Peer RTM & RTC</div>
+                    <button className="start" onClick={handleStartChattingClicked}>Click Here To Start Chatting</button>
+                </>
+            )}
+        </div>
     );
 }

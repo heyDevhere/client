@@ -4,8 +4,20 @@
     justify-content: space-between;
     align-items: center;
     padding: 6rem;
-    min-height: 100vh;
+    max-height: 100vh;
+    overflow:hidden;
+    box-sizing: border-box; 
+}
+
+body {
+  overflow: hidden;
+}
+
+@media (max-width: 437px) {
+  .main {
+    flex-direction: column;
   }
+}
   
   .description {
     display: inherit;
